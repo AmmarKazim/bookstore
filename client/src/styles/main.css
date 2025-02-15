@@ -1,0 +1,146 @@
+html {
+  padding: 0;
+  margin: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+nav menu * {
+  padding-left: 1rem;
+  color: #f8f9fa;
+}
+
+header .logo:hover {
+  background-color: rgb(96, 159, 253);
+  border-radius: 25%;
+}
+
+header .nav-link {
+  font-size: larger;
+  margin-inline: 0.5rem;
+}
+
+header .nav-link:hover {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.search-bar .text-box {
+  border-width: 0px;
+  border-radius: 1rem;
+  padding-inline: 1rem;
+  width: 100%;
+}
+
+.search-bar .text-box:focus {
+  outline-color: #f8f9fa;
+}
+
+.white-space-none {
+  padding: 0;
+  margin: 0;
+}
+
+.category-list-item {
+  cursor: pointer;
+}
+
+.product-tile {
+  box-shadow: 1px 1px 4px rgb(150, 150, 150);
+}
+
+.product-tile .card-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.filter-tile input {
+  width: 30%;
+}
+
+.dropdown-menu-btn {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu-content {
+  position: absolute;
+  background-color: whitesmoke;
+  z-index: 1;
+  box-shadow: 1px 2px 4px rgb(155, 155, 155);
+}
+
+.dropdown-menu-content li {
+  list-style-type: none;
+}
+
+.cart-tile {
+  background-color: rgb(255, 255, 255);
+}
+
+.cart-tile-img {
+  width: 6rem;
+  height: 8rem;
+}
+
+.cart-tile-controls {
+  width: 50%;
+}
+
+.product-details .product-img {
+  width: 9rem;
+  height: 15rem;
+}
+
+.review {
+  background-color: rgba(11, 93, 215, 0.05);
+}
+
+/* below code is copied from internet  */
+#rating-slider {
+  -webkit-appearance: none;
+}
+#rating-slider::-webkit-slider-runnable-track {
+  width: 300px;
+  height: 5px;
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
+}
+#rating-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 2rem;
+  width: 2rem;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  background: rgb(255, 193, 7);
+  margin-top: -1rem;
+}
+#rating-slider:focus {
+  outline: none;
+}
+#rating-slider:focus::-webkit-slider-runnable-track {
+  background: #ccc;
+}
+/* above code is copied from internet  */
+
+@media screen and (min-width: 768px) {
+  /* un-collapse or show filter-tile in desktop */
+  /* TODO: use a custom class for this functionality. use javascript to toggle class when clicked in desktop */
+  #filter-tile.filter-tile {
+    display: block;
+    visibility: show;
+  }
+}
