@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import MenuList from "./MenuList";
 import ProductsContext from "../../state_contexts/products_context";
+import SelectedCategoryContext from "../../state_contexts/selected_category_context";
 
 // return each item, recursively call menu item if sub-categories present
 function MenuItem(props) {
@@ -9,14 +10,22 @@ function MenuItem(props) {
   const [expand, setExpand] = useState(false);
   // accessing products state context
   const { products, setProducts, allProducts } = useContext(ProductsContext);
+  // accessing selected category state
+  const { selectedCategory, setSelectedCategory } = useContext(
+    SelectedCategoryContext
+  );
 
   return (
     <li className="category-list-item">
       {
         <button
-          className="m-0 p-0 btn"
+          className={`m-0 p-0 btn ${
+            selectedCategory == category.title && "selected-category"
+          }`}
           onClick={(e) => {
-            // todo: show currently selected category visually (by bolding etc)
+            // setting state to show currently selected category visually (by bolding etc)
+            setSelectedCategory(category.title);
+
             // -------------- Categories to show Books from ---------------
             let categoriesToShowResultsFor = [category.title];
             // get all subcategories of each subcategory for given category (doing it recursively, here)

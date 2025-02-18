@@ -48,6 +48,9 @@ header nav ul li a.active {
 .dropdown-menu-content li {
   list-style-type: none;
 }
+.dropdown-menu-content .selected-category {
+  font-weight: bold;
+}
 
 /* products */
 
