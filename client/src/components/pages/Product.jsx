@@ -7,10 +7,11 @@ import Review from "../widgets/Review";
 import AddReview from "../widgets/AddReview";
 import Rating from "../widgets/Rating";
 import { loadUser } from "../../libraries/user";
+import UserReviewContext from "../../state_contexts/userReviewContext";
 
 // product details page
 function Product() {
-  // retrieving url parameters
+  // retrieving url parameters (id of product)
   const { id } = useParams();
   // retrieving book parameter/state from navigation
   const { state: book } = useLocation();
@@ -19,15 +20,27 @@ function Product() {
   // local state management
   const [reviews, setReviews] = useState([]);
   const [bookRating, setBookRating] = useState(0);
+  const [userReview, setUserReview] = useState(null);
 
   const navigate = useNavigate();
 
+  const loadReviews = async () => {
+    const reviews = await fetchReviewsForProduct(id);
+    // loading review added by current usr
+    if (user) {
+      const userReviews = reviews.filter(
+        (rev, i) => rev.user == user.displayname
+      );
+      if (userReviews.length > 0) {
+        setUserReview(userReviews[0]);
+      }
+    }
+    // set all reviews for product
+    setReviews(reviews);
+  };
+
   useEffect(() => {
     loadUser(setUser);
-    const loadReviews = async () => {
-      const reviews = await fetchReviewsForProduct(id);
-      setReviews(reviews);
-    };
     loadReviews();
   }, []);
 
@@ -43,17 +56,28 @@ function Product() {
     let averageRating = totalStars / reviews.length;
     averageRating = Math.round(averageRating);
     averageRating && setBookRating(averageRating);
+
+    if (user) {
+      const userReview = reviews.filter(
+        (rev, i) => user.displayname == rev.user
+      );
+      setUserReview(userReview);
+    }
   }, [reviews]);
 
   return (
-    <main className="container">
+    <main className="container pb-5 bg-body-tertiary flex-grow-1">
       {/* img, title, price, rating, and add-to-cart button */}
       <section className="mt-5">
-        <div className="product-details d-flex justify-content-center">
-          <div className="img-di pe-2 pe-sm-4 pe-md-5 me-2 me-sm-4 me-md-5 border-end">
-            <img className="product-img" src={book.cover} alt={book.title} />
+        <div className="product-details d-flex justify-content-center flex-wrap">
+          <div className="pe-2 pe-sm-4 pe-md-5 me-2 me-sm-4 me-md-5">
+            <img
+              className="product-img mb-4"
+              src={book.cover}
+              alt={book.title}
+            />
           </div>
-          <div className="product-information">
+          <div className="product-information mb-3">
             <h1 className="product-title">{book.title}</h1>
             <p className="m-0 p-0">Rs. {book.price}</p>
             <div className="product-title-rating mt-4">
@@ -79,7 +103,7 @@ function Product() {
           </div>
         </div>
       </section>
-      <hr className="mt-5 w-75 mx-auto" />
+      <hr className="w-75 mx-auto" />
       {/* description */}
       <section className="mt-5">
         <article className="product-description">
@@ -90,14 +114,16 @@ function Product() {
       <hr className="mt-5 w-75 mx-auto" />
       {/* reviews */}
       <section className="reviews">
-        <h2>Public Reviews</h2>
-        {/* show each review */}
-        {reviews.map((review, i) => (
-          <Review key={i} review={review} />
-        ))}
-         <hr className="mt-5 w-75 mx-auto" />
-        {/* add new review */}
-        <AddReview user={user} productId={book.id} setReviews={setReviews} />
+        <UserReviewContext.Provider value={{ userReview }}>
+          <h2>Public Reviews</h2>
+          {/* show each review */}
+          {reviews.map((review, i) => {
+            return <Review key={i} review={review} loadReviews={loadReviews} />;
+          })}
+          <hr className="mt-5 w-75 mx-auto" />
+          {/* add new review */}
+          <AddReview productId={book.id} loadReviews={loadReviews} />
+        </UserReviewContext.Provider>
       </section>
     </main>
   );

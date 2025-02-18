@@ -1,41 +1,70 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchReviewsForProduct, postReview } from "../../libraries/reviews";
+import { postReview, updateReview } from "../../libraries/reviews";
 import Rating from "./Rating";
+import UserContext from "../../state_contexts/user_context";
+import UserReviewContext from "../../state_contexts/userReviewContext";
 
-function AddReview(props) {
+function AddReview({ productId, loadReviews }) {
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(3);
+  const { userReview } = useContext(UserReviewContext);
+  // accessing user state
+  const { user, setUser } = useContext(UserContext);
+  const [previousReview, setPreviousReview] = useState(null);
+
+  useEffect(() => {
+    try {
+      if (userReview.length > 0) {
+        setPreviousReview(userReview[0]);
+        setFeedback(userReview[0].feedback);
+        setRating(userReview[0].stars);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [userReview]);
 
   return (
     <article>
       <form
         className="d-grid"
+        id="addReview"
         role="add-review"
         onSubmit={async (event) => {
           event.preventDefault();
           // post this review and reload all reviews for this product
-          if (props.user) {
+          if (user) {
             const formData = new FormData(event.target);
-            const userId = props.user.id;
+            const userId = user.id;
             const feedback = formData.get("feedback");
             const rating = formData.get("rating-slider");
-            const productId = props.productId;
             const timestamp = new Date();
-            const result = await postReview(
-              userId,
-              feedback,
-              rating,
-              productId,
-              timestamp
-            );
-            // TODO: if user has already posted a review, retrieve that back and place into input fields and then update review in db
-            if (result == "OK") {
-              const allReviews = await fetchReviewsForProduct(productId);
-              props.setReviews(allReviews);
+            if (feedback.trim()) {
+              let result = previousReview
+                ? await updateReview(
+                    previousReview.id,
+                    feedback,
+                    rating,
+                    timestamp
+                  )
+                : await postReview(
+                    userId,
+                    feedback,
+                    rating,
+                    productId,
+                    timestamp
+                  );
+              if (result == "OK") {
+                await loadReviews();
+                setFeedback("");
+                setRating(3);
+              } else {
+                window.alert("There was an error posting your review.");
+              }
             } else {
-              window.alert("There was an error posting your review.");
+              alert("Empty feedback can't be submitted.");
             }
           } else {
             window.alert("You must log-in to post your review.");
@@ -47,6 +76,7 @@ function AddReview(props) {
           <legend>Enter your review</legend>
           <label htmlFor="review-textarea">Feedback :-</label>
           <textarea
+            className="form-control"
             name="feedback"
             id="feedback"
             rows="3"
@@ -66,7 +96,7 @@ function AddReview(props) {
             <small>5</small>
           </div>
           <input
-            className="mt-3"
+            className="mt-3 form-control border-0"
             type="range"
             name="rating-slider"
             id="rating-slider"
@@ -79,7 +109,11 @@ function AddReview(props) {
             }}
           />
         </fieldset>
-        <input className="btn btn-primary mt-1" type="submit" value="Submit" />
+        <input
+          className="btn btn-primary mt-1"
+          type="submit"
+          value={previousReview ? "Update" : "Submit"}
+        />
       </form>
     </article>
   );

@@ -17,6 +17,7 @@ function Cart() {
     totalItems: 0,
     totalAmount: 0,
   });
+
   // user state
   const { user, setUser } = useContext(UserContext);
 
@@ -29,7 +30,7 @@ function Cart() {
   }, []);
 
   return (
-    <main className="container">
+    <main className="container bg-body-tertiary flex-grow-1">
       <div className="row">
         <section className="order-items col-12 col-md-8">
           <div className="d-flex justify-content-between mt-3">
@@ -94,7 +95,14 @@ function Cart() {
           <h1>Order Summary</h1>
           <p>Total Items: {orderSummary.totalItems}</p>
           <p>Total Amount: Rs {orderSummary.totalAmount}</p>
-          <button className="btn btn-success" onClick={(e) => {}}>
+          <button
+            className="btn btn-success"
+            onClick={(e) => {
+              alert("Thank you for shopping with us.");
+              clearCart();
+              setCartItems(getCartItems());
+            }}
+          >
             Check Out
           </button>
         </section>

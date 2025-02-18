@@ -13,6 +13,7 @@ import Signin from "./pages/Login";
 import PasswordRecovery from "./pages/PasswordRecovery";
 import ProductsContext from "../state_contexts/products_context.js";
 import { fetchAllBooks } from "../libraries/products.js";
+import SelectedCategoryContext from "../state_contexts/selected_category_context.js";
 
 // App component to return header, pages (under routes), and footer
 function App() {
@@ -21,6 +22,8 @@ function App() {
   const [products, setProducts] = useState([]);
   // use allProduct state to reset results to allProducts when clearing filters
   const [allProducts, setAllProducts] = useState([]);
+  // state for currently selected category (to highlight that visually)
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   // to run non-react specific code.
   useEffect(() => {
@@ -42,25 +45,31 @@ function App() {
           allProducts,
         }}
       >
-        <Header />
-        {/* provide UserContext to access/manage login state globaly */}
-        <UserContext.Provider value={{ user, setUser }}>
-          {/* setting routes to their corresponding pages */}
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="product/:id" element={<Product />} />
-            <Route path="/cart" element={<Cart />} />
-            {/* using nested routes */}
-            <Route path="/account">
-              {/* TODO: directly redirect users to login form if the are not logged in. from there, they should be able to navigate to signup form if its their first time */}
-              <Route index element={<Account />} />
-              <Route path="signup" element={<Signup />} />
-              <Route path="signin" element={<Signin />} />
-              <Route path="password-recovery" element={<PasswordRecovery />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </UserContext.Provider>
+        <SelectedCategoryContext.Provider
+          value={{ selectedCategory, setSelectedCategory }}
+        >
+          <Header />
+          {/* provide UserContext to access/manage login state globaly */}
+          <UserContext.Provider value={{ user, setUser }}>
+            {/* setting routes to their corresponding pages */}
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="product/:id" element={<Product />} />
+              <Route path="/cart" element={<Cart />} />
+              {/* using nested routes */}
+              <Route path="/account">
+                <Route index element={<Account />} />
+                <Route path="signup" element={<Signup />} />
+                <Route path="signin" element={<Signin />} />
+                <Route
+                  path="password-recovery"
+                  element={<PasswordRecovery />}
+                />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </UserContext.Provider>
+        </SelectedCategoryContext.Provider>
       </ProductsContext.Provider>
       <Footer />
     </div>

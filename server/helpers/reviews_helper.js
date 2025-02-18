@@ -30,7 +30,32 @@ async function postReview(db, userid, feedback, rating, productid, timestamp) {
   }
 }
 
-export { fetchReviewsForProduct, postReview };
+async function deleteReview(db, id) {
+  try {
+    await db.query("DELETE FROM reviews WHERE id=$1;", [id]);
+    return process.env.SUCCESSSTATUS;
+  } catch (e) {
+    console.log(e);
+    return process.env.FAILURESTATUS;
+  }
+}
+
+async function updateReview({ id, feedback, stars, timestamp }) {
+  try {
+    await db.query(
+      `UPDATE reviews
+      SET feedback = $2, stars = $3, timestamp = $4
+      WHERE id=$1;`,
+      [id, feedback, stars, timestamp]
+    );
+    return process.env.SUCCESSSTATUS;
+  } catch (e) {
+    console.log(e);
+    return process.env.FAILURESTATUS;
+  }
+}
+
+export { fetchReviewsForProduct, postReview, deleteReview, updateReview };
 
 /*
 CREATE TABLE reviews (id SERIAL, userid INTEGER NOT NULL, feedback TEXT, stars INTEGER, productid INTEGER NOT NULL, timestamp TIMESTAMP, PRIMARY KEY (id), FOREIGN KEY (userid) REFERENCES users(id), FOREIGN KEY (productid) REFERENCES books(id));

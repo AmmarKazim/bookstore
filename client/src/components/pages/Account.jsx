@@ -1,57 +1,55 @@
 import React, { useContext, useEffect } from "react";
 import { loadUser, logoutUser } from "../../libraries/user";
 import UserContext from "../../state_contexts/user_context";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 // account page
 function Account() {
   // accessing user state from context
   const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate();
-
   useEffect(() => {
     loadUser(setUser);
   }, []);
 
   return (
-    <main className="flex-grow-1 container d-flex justify-content-center align-items-center">
+    <main className="flex-grow-1 container d-flex justify-content-center align-items-center bg-body-tertiary">
       {user ? (
-        <section className="d-flex flex-column justify-content-center align-items-center">
-          <div>
-            <h1>Welcome, {user.displayname}!</h1>
-            <p>{JSON.stringify(user)}</p>
-          </div>
+        <section className="">
+          <h1>
+            Welcome <b>{user.displayname},</b>
+          </h1>
+          <p>
+            Email: <b>{user.username}</b>
+          </p>
+          <p>
+            DisplayName: <b>{user.displayname}</b>
+          </p>
+          <p>
+            Password: <b>{user.password}</b>
+          </p>
           <button
             className="btn btn-primary"
             onClick={async (e) => {
               await logoutUser();
-              loadUser(setUser);
+              await loadUser(setUser);
             }}
           >
             Logout
           </button>
         </section>
       ) : (
-        <section className="d-flex flex-column justify-content-center align-items-center">
-          {/* else if user not logged in, show login & signup buttons */}
-          <h1>To continue to your account</h1>
-          <div>
-            <button
-              className="btn btn-primary ms-1"
-              onClick={(e) => {
-                navigate("/account/signin");
-              }}
-            >
-              Login
-            </button>
-            <button
-              className="btn btn-primary ms-1"
-              onClick={(e) => {
-                navigate("/account/signup");
-              }}
-            >
-              Singup
-            </button>
+        <section className="text-center">
+          <i className="bi bi-book h1"></i>
+          <div className="card p-2 bg-body-light d-flex flex-column justify-content-evenly shadow">
+            <h1>Welcome to Book Store</h1>
+            <div className="card-body d-grid">
+              <NavLink className="btn btn-primary m-2" to="/account/signin">
+                Sing-in
+              </NavLink>
+              <NavLink className="btn btn-primary m-2" to="/account/signup">
+                Sing-up
+              </NavLink>
+            </div>
           </div>
         </section>
       )}

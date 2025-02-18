@@ -2,10 +2,15 @@ import React, { useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import ProductsContext from "../../state_contexts/products_context";
 import $ from "jquery";
+import SelectedCategoryContext from "../../state_contexts/selected_category_context";
 
 function Header() {
   // accessing products state context
   const { products, setProducts, allProducts } = useContext(ProductsContext);
+  // accessing selected category state
+  const { selectedCategory, setSelectedCategory } = useContext(
+    SelectedCategoryContext
+  );
 
   const searchResults = (searchTerm) => {
     if (searchTerm) {
@@ -16,6 +21,7 @@ function Header() {
     } else {
       setProducts(allProducts);
     }
+    setSelectedCategory("");
   };
 
   // adding jQuery code
@@ -37,7 +43,7 @@ function Header() {
 
   return (
     <header
-      className="navbar navbar-expand-lg bg-primary m-0 p-0"
+      className="navbar navbar-expand-sm bg-primary m-0 p-0"
       role="navigation"
     >
       <section className="container-fluid m-0 px-1">
@@ -51,9 +57,6 @@ function Header() {
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarContent"
-          aria-controls="navbarContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
         >
           <i className="bi bi-list fs-1 text-light"></i>
         </button>

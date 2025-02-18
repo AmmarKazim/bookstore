@@ -53,55 +53,82 @@ header nav ul li a.active {
 }
 
 /* products */
-
-.product-tile {
+.shadow {
   box-shadow: 1px 1px 4px rgb(150, 150, 150);
 }
-
 .card-img-top {
   height: 16rem;
 }
-
 .product-tile .card-title {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
+@media screen and (max-width: 500px) {
+  .card-img-top {
+    height: 12rem;
+  }
+}
+
+/* filters */
 .filter-tile input {
   width: 30%;
 }
 
+/* --------------------------- Account --------------------------- */
+/* signin */
+.signin-card {
+  height: 36rem;
+  width: 24rem;
+}
+@media screen and (max-width: 576px) {
+  .signin-card {
+    height: 28rem;
+    width: 16rem;
+  }
+}
+
+/* signup */
+
+.signup-card {
+  height: 36rem;
+  width: 24rem;
+}
+@media screen and (max-width: 576px) {
+  .signup-card {
+    height: 28rem;
+    width: 16rem;
+  }
+}
+
+/* --------------------------- Cart --------------------------- */
 .cart-tile {
   background-color: rgb(255, 255, 255);
 }
-
 .cart-tile-img {
   width: 6rem;
   height: 8rem;
 }
-
 .cart-tile-controls {
   width: 50%;
 }
 
-/* filters */
+/* --------------------------- Product --------------------------- */
 
-/* --------------------------- Account --------------------------- */
-
-/* --------------------------- Cart --------------------------- */
-
-/*  
-
-
-.product-details .product-img {
-  width: 9rem;
-  height: 15rem;
+@media screen and (max-width: 768px) {
+  .product-details .product-img {
+    width: 14rem;
+    height: 24rem;
+  }
 }
 
-.review {
-  background-color: rgba(11, 93, 215, 0.05);
-} */
+@media screen and (max-width: 576px) {
+  .product-details .product-img {
+    width: 12rem;
+    height: 20rem;
+  }
+}
 
 /* below code is copied from internet  */
 #rating-slider {
@@ -141,12 +168,3 @@ header nav ul li a.active {
   background: #ccc;
 }
 /* above code is copied from internet  */
-
-@media screen and (min-width: 768px) {
-  /* un-collapse or show filter-tile in desktop */
-  /* TODO: use a custom class for this functionality. use javascript to toggle class when clicked in desktop */
-  /* #filter-tile.filter-tile {
-    display: block;
-    visibility: show;
-  } */
-}

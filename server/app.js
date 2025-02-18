@@ -5,8 +5,10 @@ import pg from "pg";
 import { fetchAllCategories } from "./helpers/categories_helper.js";
 import { fetchAllBooks } from "./helpers/books_helper.js";
 import {
+  deleteReview,
   fetchReviewsForProduct,
   postReview,
+  updateReview,
 } from "./helpers/reviews_helper.js";
 import session from "express-session";
 import passport from "passport";
@@ -134,6 +136,18 @@ app.post("/reviews", async (req, res) => {
     productId,
     timestamp
   );
+  res.sendStatus(result);
+});
+
+// returns eith success-status or failure-status
+app.delete("/review/:id", async (req, res) => {
+  const id = req.params.id;
+  const result = await deleteReview(db, id);
+  res.sendStatus(result);
+});
+// returns eith success-status or failure-status
+app.patch("/review", async (req, res) => {
+  const result = await updateReview(req.body);
   res.sendStatus(result);
 });
 

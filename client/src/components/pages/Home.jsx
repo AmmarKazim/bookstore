@@ -25,7 +25,7 @@ function Home() {
   }, []);
 
   return (
-    <main className="container">
+    <main className="container pb-5 bg-body-tertiary flex-grow-1">
       <Categories categories={categories} />
       <div className="row m-0 p-0">
         <Filters allBooks={products} setFilteredBooks={setProducts} />

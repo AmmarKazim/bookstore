@@ -12,7 +12,7 @@ function ProductTile(props) {
 
   return (
     <section className="p-0 col-6 col-lg-4 col-xl-3">
-      <div className="card product-tile m-2">
+      <div className="card product-tile m-2 shadow">
         <img src={cover} className="card-img-top" alt={title} />
         <div className="card-body p-0 m-1">
           <h5 className="card-title mb-0">{title}</h5>
@@ -33,7 +33,7 @@ function ProductTile(props) {
                 addToCartItem(book, true);
               } else {
                 window.alert("You must log-in to add this item to cart.");
-                navigate("/account");
+                navigate("/account/signin");
               }
             }}
           >
