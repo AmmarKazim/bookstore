@@ -63,7 +63,6 @@ const resetPassword = async () => {};
 // load logged in user
 const loadUser = async (setUser) => {
   const user = await fetchUser();
-  console.log(user);
   setUser(user);
 };
 

@@ -15,7 +15,7 @@ function PriceFilter() {
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#priceFilter"
-          aria-expanded="false"
+          aria-expanded="true"
           aria-controls="priceFilter"
           onClick={(e) => {
             _setIcon("priceFilter", setIcon);
@@ -32,7 +32,6 @@ function PriceFilter() {
         <div>
           <form
             onSubmit={(event) => {
-              // todo: streamline this function
               event.preventDefault();
               const formData = new FormData(event.target);
               const minPrice = formData.get("minPrice");
@@ -53,8 +52,18 @@ function PriceFilter() {
             role="price-filter"
             className="d-flex justify-content-between"
           >
-            <input type="number" name="minPrice" placeholder="min" />
-            <input type="number" name="maxPrice" placeholder="max" />
+            <input
+              type="number"
+              className="form-control"
+              name="minPrice"
+              placeholder="min"
+            />
+            <input
+              type="number"
+              className="form-control"
+              name="maxPrice"
+              placeholder="max"
+            />
             <input
               type="submit"
               value="Apply"
@@ -74,7 +83,7 @@ const _setIcon = (identifier, setIcon) => {
   if (filterBody.classList.contains("show")) {
     setIcon("dash");
   } else if (filterBody.classList.contains("collapsing")) {
-    setIcon("");
+    setIcon("x");
   } else {
     setIcon("plus");
   }

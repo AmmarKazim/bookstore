@@ -31,7 +31,7 @@ app.use(
     credentials: true,
   })
 );
-// using request body parser middleware
+// using request body parser middleware to access req.body
 app.use(express.urlencoded({ extended: true }));
 // using espress session persistence middleware
 app.use(

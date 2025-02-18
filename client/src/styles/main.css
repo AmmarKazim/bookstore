@@ -1,52 +1,62 @@
+:root {
+}
+
 html {
-  padding: 0;
-  margin: 0;
-  min-width: 100vw;
-  min-height: 100vh;
 }
 
-nav menu * {
-  padding-left: 1rem;
-  color: #f8f9fa;
+body {
 }
 
+/* --------------------------- Header --------------------------- */
 header .logo:hover {
   background-color: rgb(96, 159, 253);
   border-radius: 25%;
 }
-
-header .nav-link {
-  font-size: larger;
-  margin-inline: 0.5rem;
+header button.navbar-toggler {
+  outline: none;
+  box-shadow: none;
 }
-
-header .nav-link:hover {
-  font-size: larger;
+header button.navbar-toggler:focus {
+  outline-width: 1px;
+  outline-color: rgba(255, 255, 255, 0.25);
+  outline-style: solid;
+  box-shadow: none;
+}
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+header nav ul li a:hover {
+  text-decoration: underline;
+}
+header nav ul li a.active {
   font-weight: bold;
 }
 
-.search-bar .text-box {
-  border-width: 0px;
-  border-radius: 1rem;
-  padding-inline: 1rem;
-  width: 100%;
+/* --------------------------- Home --------------------------- */
+/* categories */
+.dropdown-menu-btn {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-menu-content {
+  position: absolute;
+  background-color: whitesmoke;
+  z-index: 1;
+  box-shadow: 1px 2px 4px rgb(155, 155, 155);
+}
+.dropdown-menu-content li {
+  list-style-type: none;
 }
 
-.search-bar .text-box:focus {
-  outline-color: #f8f9fa;
-}
-
-.white-space-none {
-  padding: 0;
-  margin: 0;
-}
-
-.category-list-item {
-  cursor: pointer;
-}
+/* products */
 
 .product-tile {
   box-shadow: 1px 1px 4px rgb(150, 150, 150);
+}
+
+.card-img-top {
+  height: 16rem;
 }
 
 .product-tile .card-title {
@@ -57,22 +67,6 @@ header .nav-link:hover {
 
 .filter-tile input {
   width: 30%;
-}
-
-.dropdown-menu-btn {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-menu-content {
-  position: absolute;
-  background-color: whitesmoke;
-  z-index: 1;
-  box-shadow: 1px 2px 4px rgb(155, 155, 155);
-}
-
-.dropdown-menu-content li {
-  list-style-type: none;
 }
 
 .cart-tile {
@@ -88,6 +82,15 @@ header .nav-link:hover {
   width: 50%;
 }
 
+/* filters */
+
+/* --------------------------- Account --------------------------- */
+
+/* --------------------------- Cart --------------------------- */
+
+/*  
+
+
 .product-details .product-img {
   width: 9rem;
   height: 15rem;
@@ -95,7 +98,7 @@ header .nav-link:hover {
 
 .review {
   background-color: rgba(11, 93, 215, 0.05);
-}
+} */
 
 /* below code is copied from internet  */
 #rating-slider {
@@ -139,8 +142,8 @@ header .nav-link:hover {
 @media screen and (min-width: 768px) {
   /* un-collapse or show filter-tile in desktop */
   /* TODO: use a custom class for this functionality. use javascript to toggle class when clicked in desktop */
-  #filter-tile.filter-tile {
+  /* #filter-tile.filter-tile {
     display: block;
     visibility: show;
-  }
+  } */
 }

@@ -4,12 +4,15 @@ import PriceFilter from "./PriceFilter";
 // to filter the results
 function Filters() {
   return (
-    <aside className="filters bg-succes col-12 col-md-4 col-lg-3 col-xl-2 white-space-none">
+    <aside className="filters text-bg-succes col-12 col-md-4 col-lg-3 col-xl-2 white-space-none">
       <div className="d-grid">
         <button
           className="text-start btn m-0 p-0 fs-3"
+          type="button"
           data-bs-toggle="collapse"
           data-bs-target="#filter-tile"
+          aria-expanded="true"
+          aria-controls="filter-tile"
         >
           Apply Filters
         </button>
